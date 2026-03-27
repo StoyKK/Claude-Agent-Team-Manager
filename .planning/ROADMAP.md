@@ -10,7 +10,7 @@
 
 ## Phases
 
-- [x] **Phase 1: Infrastructure** - Fix blocking bugs and lay shared foundations (logger, error types, JSONC, Vitest) (completed 2026-03-27)
+- [x] **Phase 1: Infrastructure** - Fix blocking bugs and lay shared foundations (logger, error types, JSONC) (completed 2026-03-27)
 - [ ] **Phase 2: Service Tests** - Test utility functions and service-layer parsers with the infrastructure from Phase 1
 - [ ] **Phase 3: Component Tests and Error Boundaries** - Test the SetupWizard end-to-end and add React Error Boundaries
 
@@ -19,15 +19,14 @@
 ## Phase Details
 
 ### Phase 1: Infrastructure
-**Goal**: The app reaches the main editor without silent failures — visible errors, parseable settings, a working test runner, typed errors, and structured logging are all in place
+**Goal**: The app reaches the main editor without silent failures — visible errors, parseable settings, typed errors, and structured logging are all in place
 **Depends on**: Nothing
 **Requirements**: BUG-01, BUG-02, BUG-03, BUG-04, LOG-01, LOG-02, ERR-01, ERR-02
 **Success Criteria** (what must be TRUE):
   1. A user running the setup wizard sees any toast error messages — they are not hidden behind the blurred overlay
   2. A user whose `~/.claude/settings.json` contains comments (JSONC) passes wizard step 2 without a false "Agent teams not enabled" message
   3. A user on a fresh macOS install where only `~/.claude/settings.json` exists (no project-level file) is not blocked at wizard step 2
-  4. Running `pnpm test` in the project root executes the Vitest suite without import alias errors or `fs` stub failures
-  5. A developer inspecting log output sees structured log entries (with level and context) rather than raw `console.log` strings
+  4. A developer inspecting log output sees structured log entries (with level and context) rather than raw `console.log` strings
 **Plans:** 4/4 plans complete
 
 Plans:
