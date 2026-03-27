@@ -43,7 +43,12 @@ Plans:
   1. Running `pnpm test` runs at least one Tier 1 test covering `paths.ts` join/normalize/generateNodeId and at least one test covering a Zod schema in `validation.ts`
   2. Running `pnpm test` runs Tier 2 tests for `agent-parser`, `skill-parser`, and `file-scanner` that pass without requiring a real filesystem or Rust backend
   3. A test asserting on a parse failure receives a typed error (e.g. `ParseError` with `kind === 'parse'`), not a plain `Error` with a string message
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Configure Vitest 3 with jsdom, path aliases, and Tauri stub
+- [ ] 02-02-PLAN.md — Tier 1 unit tests for paths.ts and validation.ts
+- [ ] 02-03-PLAN.md — Tier 2 service tests for parsers and file-scanner with typed error wrapping
 
 ### Phase 3: Component Tests and Error Boundaries
 **Goal**: The SetupWizard is covered by component tests and app-crashing render errors are caught gracefully rather than blanking the screen
@@ -63,10 +68,10 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure | 4/4 | Complete   | 2026-03-27 |
-| 2. Service Tests | 0/? | Not started | - |
+| 2. Service Tests | 0/3 | Not started | - |
 | 3. Component Tests and Error Boundaries | 0/? | Not started | - |
 
 ---
 
 *Roadmap created: 2026-03-27*
-*Last updated: 2026-03-27 after Phase 1 planning*
+*Last updated: 2026-03-27 after Phase 2 planning*
