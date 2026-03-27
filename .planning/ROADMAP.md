@@ -58,8 +58,11 @@ Plans:
   1. Running `pnpm test` includes Tier 3 tests that exercise all three SetupWizard steps, the "Get Started" completion path, and at least one error-case path (e.g. JSONC parse failure in step 2)
   2. When a render error occurs inside the wizard or the canvas, the user sees a fallback UI (error message + retry option) rather than a blank white screen
   3. An unhandled promise rejection in the app is caught and logged rather than silently swallowed
-**Plans**: TBD
-**UI hint**: yes
+**Plans:** 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Error Boundaries: install react-error-boundary, create ErrorFallback component, wrap App sections, add unhandledrejection handler
+- [ ] 03-02-PLAN.md — Tier 3 component tests for SetupWizard (all steps, completion, error case) and ErrorFallback
 
 ---
 
@@ -69,9 +72,9 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Infrastructure | 4/4 | Complete   | 2026-03-27 |
 | 2. Service Tests | 2/3 | In Progress|  |
-| 3. Component Tests and Error Boundaries | 0/? | Not started | - |
+| 3. Component Tests and Error Boundaries | 0/2 | Not started | - |
 
 ---
 
 *Roadmap created: 2026-03-27*
-*Last updated: 2026-03-27 after Phase 2 planning*
+*Last updated: 2026-03-27 after Phase 3 planning*
