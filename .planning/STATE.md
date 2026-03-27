@@ -3,18 +3,18 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-27T18:56:04.631Z"
+last_updated: "2026-03-27T19:06:37.628Z"
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 7
-  completed_plans: 5
-  percent: 71
+  completed_plans: 6
+  percent: 86
 ---
 
 # Project State: ATM Stability
 
-**Last updated:** 2026-03-27 (plan 01-02 complete)
+**Last updated:** 2026-03-27 (plan 02-03 complete)
 **Milestone:** ATM Stability
 
 ---
@@ -30,14 +30,14 @@ progress:
 ## Current Position
 
 Phase: 02 (Service Tests) — EXECUTING
-Plan: 2 of 3
-**Active Phase:** 1 — Infrastructure
-**Active Plan:** Plans 01-03 complete (Plan 04 next)
-**Status:** Ready to execute
+Plan: 3 of 3 (all complete)
+**Active Phase:** 2 — Service Tests
+**Active Plan:** Plans 02-01 through 02-03 complete
+**Status:** Phase 02 all plans complete — ready for phase transition
 
 **Progress:**
 
-[███████░░░] 71%
+[█████████░] 86%
 Phase 1 [          ]   0% — Not started
 Phase 2 [          ]   0% — Not started
 Phase 3 [          ]   0% — Not started
@@ -63,6 +63,7 @@ Phase 3 [          ]   0% — Not started
 | Phase 01 P01 | 4 | 2 tasks | 4 files |
 | Phase 01 P04 | 294 | 2 tasks | 6 files |
 | Phase 02 P01 | 8 | 2 tasks | 4 files |
+| Phase 02 P03 | 505 | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Phase 3 [          ]   0% — Not started
 | `createPortal` for ToastContainer | z-index bump alone fails when any ancestor has `backdrop-filter`; must render at `document.body` | Pending implementation |
 | jsdom over happy-dom | Safer for this project's use of File, Blob, URL, and `window.__TAURI_INTERNALS__` | Pending implementation |
 | `@testing-library/react` v16 | First RTL version with React 19 peer support | Pending implementation |
+| Gray-matter cache-aware testing | gray-matter caches partial file object before parseMatter — use single-call rejection pattern (catch+expect) not double rejects assertions | Implemented (02-03) |
+| Separate try-catch per failure mode | parsers use distinct try-catch for readTextFile vs matter() to produce different ParseError messages | Implemented (02-03) |
 
 ### Critical Pitfalls to Avoid
 
@@ -86,6 +89,7 @@ Phase 3 [          ]   0% — Not started
 - JSONC fix applied to only one callsite — fix all 3 (wizard step 2, `handleEnableTeams`, `settings-parser.ts`)
 - Zustand store state leaking between tests — reset with `store.setState(initialState, true)` in `beforeEach`
 - Toast z-index fixed with number bump only — must use `createPortal` because the wizard creates a CSS stacking context via `backdrop-filter`
+- gray-matter `matter.cache` stores partial `{data:{}}` before `parseMatter` throws — calling the same bad YAML twice in a test will have the second call resolve (cache hit); use single-call rejection pattern
 
 ### Open TODOs
 

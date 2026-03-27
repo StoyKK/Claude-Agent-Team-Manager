@@ -48,7 +48,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Configure Vitest 3 with jsdom, path aliases, and Tauri stub
 - [ ] 02-02-PLAN.md — Tier 1 unit tests for paths.ts and validation.ts
-- [ ] 02-03-PLAN.md — Tier 2 service tests for parsers and file-scanner with typed error wrapping
+- [x] 02-03-PLAN.md — Tier 2 service tests for parsers and file-scanner with typed error wrapping
 
 ### Phase 3: Component Tests and Error Boundaries
 **Goal**: The SetupWizard is covered by component tests and app-crashing render errors are caught gracefully rather than blanking the screen
