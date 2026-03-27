@@ -9,10 +9,10 @@ Requirements for stability milestone. Each maps to roadmap phases.
 
 ### Bug Fixes
 
-- [ ] **BUG-01**: Toast notifications render above all overlays including setup wizard (createPortal to document.body, z-index above 20000)
-- [ ] **BUG-02**: Claude settings files parsed with JSONC support (handle comments) across all 3 callsites (wizard step 2, handleEnableTeams, settings-parser)
-- [ ] **BUG-03**: Setup wizard reads global ~/.claude/settings.json when project-level .claude/settings.json doesn't contain the expected keys
-- [ ] **BUG-04**: Setup wizard "Get Started" button completes setup successfully or shows a readable error message to the user
+- [x] **BUG-01**: Toast notifications render above all overlays including setup wizard (createPortal to document.body, z-index above 20000)
+- [x] **BUG-02**: Claude settings files parsed with JSONC support (handle comments) across all 3 callsites (wizard step 2, handleEnableTeams, settings-parser)
+- [x] **BUG-03**: Setup wizard reads global ~/.claude/settings.json when project-level .claude/settings.json doesn't contain the expected keys
+- [x] **BUG-04**: Setup wizard "Get Started" button completes setup successfully or shows a readable error message to the user
 
 ### Logging
 
@@ -66,10 +66,10 @@ Deferred to future milestones. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BUG-01 | Phase 1 | Pending |
-| BUG-02 | Phase 1 | Pending |
-| BUG-03 | Phase 1 | Pending |
-| BUG-04 | Phase 1 | Pending |
+| BUG-01 | Phase 1 | Complete |
+| BUG-02 | Phase 1 | Complete |
+| BUG-03 | Phase 1 | Complete |
+| BUG-04 | Phase 1 | Complete |
 | LOG-01 | Phase 1 | Complete |
 | LOG-02 | Phase 1 | Pending |
 | ERR-01 | Phase 1 | Pending |
