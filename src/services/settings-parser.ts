@@ -1,13 +1,15 @@
 import { readTextFile } from "@tauri-apps/plugin-fs";
-import { parse as parseJsonc, type ParseError } from "jsonc-parser";
+import { parse as parseJsonc, type ParseError as JsoncParseError } from "jsonc-parser";
 import type { AuiNode } from "@/types/aui-node";
 import type { SettingsConfig } from "@/types/settings";
 import { SettingsConfigSchema } from "@/types/settings";
 import { getFileName, generateNodeId } from "@/utils/paths";
+import { ParseError } from "@/types/errors";
 
 /**
  * Parse a settings JSON file into an AuiNode.
  * If content is not provided, reads the file from disk via Tauri FS.
+ * @throws {ParseError} If the file cannot be read or JSON/JSONC parsing fails
  */
 export async function parseSettingsFile(
   filePath: string,
@@ -18,7 +20,7 @@ export async function parseSettingsFile(
   const parseErrors: string[] = [];
 
   try {
-    const errors: ParseError[] = [];
+    const errors: JsoncParseError[] = [];
     rawConfig = parseJsonc(raw, errors, { allowTrailingComma: true });
     if (errors.length > 0) {
       parseErrors.push("Settings file contains invalid JSONC");

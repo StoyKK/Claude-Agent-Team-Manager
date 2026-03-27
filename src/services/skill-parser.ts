@@ -1,0 +1,57 @@
+import matter from "gray-matter";
+import { readTextFile } from "@tauri-apps/plugin-fs";
+import type { AuiNode } from "@/types/aui-node";
+import type { SkillConfig } from "@/types/skill";
+import { SkillConfigSchema } from "@/types/skill";
+import { getFileName, titleCase, generateNodeId } from "@/utils/paths";
+import { ParseError } from "@/types/errors";
+
+/**
+ * Parse a SKILL.md file into an AuiNode.
+ * If content is not provided, reads the file from disk via Tauri FS.
+ * @throws {ParseError} If the file cannot be read or gray-matter parsing fails
+ */
+export async function parseSkillFile(
+  filePath: string,
+  content?: string
+): Promise<AuiNode> {
+  const raw = content ?? (await readTextFile(filePath));
+  const parsed = matter(raw);
+  const hasFrontmatter = Object.keys(parsed.data).length > 0;
+
+  const name: string =
+    hasFrontmatter && parsed.data.name
+      ? String(parsed.data.name)
+      : titleCase(getFileName(filePath));
+
+  const rawConfig: Record<string, unknown> = {
+    name,
+    ...(hasFrontmatter ? parsed.data : {}),
+  };
+
+  const result = SkillConfigSchema.safeParse(rawConfig);
+  const config: SkillConfig = result.success
+    ? result.data
+    : (rawConfig as SkillConfig);
+  const validationErrors = result.success
+    ? []
+    : result.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`);
+
+  return {
+    id: generateNodeId(filePath),
+    name,
+    kind: "skill",
+    parentId: null,
+    team: null,
+    sourcePath: filePath,
+    config,
+    promptBody: parsed.content,
+    tags: [],
+    lastModified: Date.now(),
+    validationErrors,
+    assignedSkills: [],
+    variables: [],
+    launchPrompt: "",
+    pipelineSteps: [],
+  };
+}
