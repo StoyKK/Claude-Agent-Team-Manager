@@ -31,7 +31,7 @@ describe("ErrorFallback", () => {
       .spyOn(console, "error")
       .mockImplementation(() => {});
 
-    function ThrowingComponent() {
+    function ThrowingComponent(): never {
       throw new Error("render crash");
     }
 

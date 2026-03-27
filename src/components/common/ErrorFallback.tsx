@@ -76,7 +76,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
             margin: "0 0 20px",
           }}
         >
-          {error.message}
+          {error instanceof Error ? error.message : String(error)}
         </pre>
 
         <button
