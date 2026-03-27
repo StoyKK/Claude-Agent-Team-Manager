@@ -14,7 +14,7 @@ progress:
 
 # Project State: ATM Stability
 
-**Last updated:** 2026-03-27
+**Last updated:** 2026-03-27 (plan 01-02 complete)
 **Milestone:** ATM Stability
 
 ---
@@ -32,8 +32,8 @@ progress:
 Phase: 01 (Infrastructure) — EXECUTING
 Plan: 3 of 4
 **Active Phase:** 1 — Infrastructure
-**Active Plan:** None (not yet planned)
-**Status:** Ready to execute
+**Active Plan:** Plans 01-03 complete (Plan 04 next)
+**Status:** In progress
 
 **Progress:**
 
@@ -72,7 +72,7 @@ Phase 3 [          ]   0% — Not started
 | `mergeConfig` alias inheritance | Vitest must inherit `@/` alias and `fs` stub from vite.config.ts | Pending implementation |
 | `jsonc-parser` v3.3.1 | Microsoft-maintained, handles comments + trailing commas, zero deps | Pending implementation |
 | Logger as facade | Must check `window.__TAURI_INTERNALS__` at call time, not import time, to preserve Tier 1 test isolation | Pending implementation |
-| Typed `Error` subclasses | `AtmError` base → `ParseError`, `WriteError`, `ValidationError`, `ScanError`; narrowable via `instanceof` and `.kind` | Pending implementation |
+| Typed `Error` subclasses | `AtmError` base → `ParseError`, `WriteError`, `ValidationError`, `ScanError`; narrowable via `instanceof` and `.kind` | Implemented (01-02) |
 | `createPortal` for ToastContainer | z-index bump alone fails when any ancestor has `backdrop-filter`; must render at `document.body` | Pending implementation |
 | jsdom over happy-dom | Safer for this project's use of File, Blob, URL, and `window.__TAURI_INTERNALS__` | Pending implementation |
 | `@testing-library/react` v16 | First RTL version with React 19 peer support | Pending implementation |
