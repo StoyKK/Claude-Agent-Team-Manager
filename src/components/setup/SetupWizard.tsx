@@ -6,36 +6,25 @@ import { toast } from "@/components/common/Toast";
 import { parse as parseJsonc, modify, applyEdits } from "jsonc-parser";
 import { homeDir } from "@tauri-apps/api/path";
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 export function SetupWizard() {
   const projectPath = useTreeStore((s) => s.projectPath);
   const [visible, setVisible] = useState(false);
   const [step, setStep] = useState<Step>(1);
 
-  // Step 1 state
-  const [apiKey, setApiKey] = useState("");
-  const [showKey, setShowKey] = useState(false);
-
-  // Step 2 state
+  // Step 1 state (agent teams)
   const [teamsEnabled, setTeamsEnabled] = useState<boolean | null>(null);
   const [teamsError, setTeamsError] = useState(false);
   const [enabling, setEnabling] = useState(false);
 
-  // Summary state
-  const [apiKeySaved, setApiKeySaved] = useState(false);
-
-  // Check if wizard should show
+  // Check if wizard should show (uses global ~/.aui/settings.json)
   useEffect(() => {
     if (!projectPath) return;
     (async () => {
       try {
-        const settingsPath = join(projectPath, ".aui", "settings.json");
-        if (await exists(settingsPath)) {
-          const raw = await readTextFile(settingsPath);
-          const data = JSON.parse(raw);
-          if (data.setupCompleted === true) return;
-        }
+        const settings = await readAuiSettings();
+        if (settings.setupCompleted === true) return;
         setVisible(true);
       } catch {
         setVisible(true);
@@ -43,9 +32,9 @@ export function SetupWizard() {
     })();
   }, [projectPath]);
 
-  // Check agent teams status when entering step 2
+  // Check agent teams status when entering step 1
   useEffect(() => {
-    if (step !== 2 || !projectPath) return;
+    if (step !== 1 || !projectPath) return;
     (async () => {
       try {
         const claudeSettingsPath = join(projectPath, ".claude", "settings.json");
@@ -93,54 +82,38 @@ export function SetupWizard() {
   if (!visible || !projectPath) return null;
 
   // -- Helpers --
+  // Global settings live in ~/.aui/settings.json (not per-project)
 
-  async function ensureAuiDir() {
-    const auiDir = join(projectPath!, ".aui");
+  async function globalSettingsPath(): Promise<string> {
+    const home = await homeDir();
+    return `${home.replace(/[\\/]+$/, "")}/.aui/settings.json`;
+  }
+
+  async function ensureGlobalAuiDir() {
+    const home = await homeDir();
+    const auiDir = `${home.replace(/[\\/]+$/, "")}/.aui`;
     if (!(await exists(auiDir))) {
       await mkdir(auiDir, { recursive: true });
     }
   }
 
   async function readAuiSettings(): Promise<Record<string, unknown>> {
-    const settingsPath = join(projectPath!, ".aui", "settings.json");
     try {
-      if (await exists(settingsPath)) {
-        return JSON.parse(await readTextFile(settingsPath));
+      const path = await globalSettingsPath();
+      if (await exists(path)) {
+        return JSON.parse(await readTextFile(path));
       }
     } catch { /* ignore */ }
     return {};
   }
 
   async function writeAuiSettings(data: Record<string, unknown>) {
-    await ensureAuiDir();
-    const settingsPath = join(projectPath!, ".aui", "settings.json");
-    await writeTextFile(settingsPath, JSON.stringify(data, null, 2));
+    await ensureGlobalAuiDir();
+    const path = await globalSettingsPath();
+    await writeTextFile(path, JSON.stringify(data, null, 2));
   }
 
-  // -- Step 1 handlers --
-
-  async function handleSaveApiKey() {
-    if (!apiKey.trim()) {
-      toast("Please enter an API key", "error");
-      return;
-    }
-    try {
-      const settings = await readAuiSettings();
-      settings.apiKey = apiKey.trim();
-      await writeAuiSettings(settings);
-      setApiKeySaved(true);
-      toast("API key saved", "success");
-      setStep(2);
-    } catch (err) {
-      toast(err instanceof Error ? err.message : "Failed to save API key", "error");
-    }
-  }
-
-  function handleSkipApiKey() {
-    setStep(2);
-  }
-
-  // -- Step 2 handlers --
+  // -- Step 1 handler (enable teams) --
 
   async function handleEnableTeams() {
     if (!projectPath) return;
@@ -151,7 +124,6 @@ export function SetupWizard() {
       if (await exists(claudeSettingsPath)) {
         raw = await readTextFile(claudeSettingsPath);
       }
-      // Use modify + applyEdits to preserve comments in the file
       const edits = modify(
         raw,
         ["env", "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"],
@@ -171,7 +143,7 @@ export function SetupWizard() {
     }
   }
 
-  // -- Step 3 handler --
+  // -- Step 2 handler (get started) --
 
   async function handleGetStarted() {
     try {
@@ -179,17 +151,9 @@ export function SetupWizard() {
       settings.setupCompleted = true;
       await writeAuiSettings(settings);
       setVisible(false);
-    } catch {
-      toast("Could not complete setup \u2014 check that your home directory is writable", "error");
-    }
-  }
-
-  async function openExternalUrl(url: string) {
-    try {
-      const { open: shellOpen } = await import("@tauri-apps/plugin-shell");
-      await shellOpen(url);
-    } catch {
-      toast("Could not open browser", "error");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      toast(`Could not complete setup: ${msg}`, "error");
     }
   }
 
@@ -240,24 +204,12 @@ export function SetupWizard() {
     cursor: "pointer",
   };
 
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    padding: "8px 12px",
-    background: "var(--bg-primary)",
-    border: "1px solid var(--border-color)",
-    borderRadius: 6,
-    color: "var(--text-primary)",
-    fontSize: 14,
-    outline: "none",
-    boxSizing: "border-box",
-  };
-
   // -- Step indicator --
 
   function StepDots() {
     return (
       <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 24 }}>
-        {([1, 2, 3] as Step[]).map((s) => (
+        {([1, 2] as Step[]).map((s) => (
           <div
             key={s}
             style={{
@@ -286,75 +238,6 @@ export function SetupWizard() {
         </p>
         <p style={{ margin: "0 0 20px", fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.5 }}>
           Organize your Claude Code agents into super teams that work in parallel.
-        </p>
-
-        <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
-          Anthropic API Key
-        </label>
-        <div style={{ position: "relative", marginBottom: 6 }}>
-          <input
-            type={showKey ? "text" : "password"}
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="sk-ant-..."
-            style={{ ...inputStyle, paddingRight: 40 }}
-            onKeyDown={(e) => e.key === "Enter" && handleSaveApiKey()}
-          />
-          <button
-            onClick={() => setShowKey(!showKey)}
-            style={{
-              position: "absolute",
-              right: 8,
-              top: "50%",
-              transform: "translateY(-50%)",
-              background: "none",
-              border: "none",
-              color: "var(--text-secondary)",
-              cursor: "pointer",
-              fontSize: 12,
-              padding: "2px 4px",
-            }}
-          >
-            {showKey ? "Hide" : "Show"}
-          </button>
-        </div>
-        <button
-          onClick={() => openExternalUrl("https://console.anthropic.com/settings/keys")}
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--accent-blue)",
-            fontSize: 12,
-            cursor: "pointer",
-            padding: 0,
-            marginBottom: 20,
-            textDecoration: "underline",
-          }}
-        >
-          Get API Key
-        </button>
-
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button onClick={handleSkipApiKey} style={secondaryBtnStyle}>
-            Skip
-          </button>
-          <button onClick={handleSaveApiKey} style={primaryBtnStyle}>
-            Next
-          </button>
-        </div>
-      </>
-    );
-  }
-
-  function renderStep2() {
-    return (
-      <>
-        <h2 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700 }}>
-          Claude Code Agent Teams
-        </h2>
-        <p style={{ margin: "0 0 20px", fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.5 }}>
-          Agent teams allow Claude Code to spawn multiple AI agents that work in parallel.
-          ATM helps you organize and manage these teams.
         </p>
 
         <div
@@ -419,11 +302,8 @@ export function SetupWizard() {
           )}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button onClick={() => setStep(1)} style={secondaryBtnStyle}>
-            Back
-          </button>
-          <button onClick={() => setStep(3)} style={primaryBtnStyle}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button onClick={() => setStep(2)} style={primaryBtnStyle}>
             Next
           </button>
         </div>
@@ -431,7 +311,7 @@ export function SetupWizard() {
     );
   }
 
-  function renderStep3() {
+  function renderStep2() {
     return (
       <>
         <h2 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700 }}>
@@ -454,12 +334,6 @@ export function SetupWizard() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
-            <span style={{ color: apiKeySaved ? "var(--accent-green)" : "var(--text-secondary)", fontSize: 16 }}>
-              {apiKeySaved ? "\u2713" : "\u2013"}
-            </span>
-            <span>{apiKeySaved ? "API key saved" : "API key skipped"}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
             <span style={{ color: teamsEnabled ? "var(--accent-green)" : "var(--text-secondary)", fontSize: 16 }}>
               {teamsEnabled ? "\u2713" : "\u2013"}
             </span>
@@ -470,7 +344,7 @@ export function SetupWizard() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button onClick={() => setStep(2)} style={secondaryBtnStyle}>
+          <button onClick={() => setStep(1)} style={secondaryBtnStyle}>
             Back
           </button>
           <button onClick={handleGetStarted} style={primaryBtnStyle}>
@@ -487,7 +361,6 @@ export function SetupWizard() {
         <StepDots />
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
-        {step === 3 && renderStep3()}
       </div>
     </div>
   );

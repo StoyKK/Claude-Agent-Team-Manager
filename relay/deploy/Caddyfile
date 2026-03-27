@@ -1,0 +1,29 @@
+atm-relay.datafying.tech {
+    # API endpoints → relay server
+    handle /health {
+        reverse_proxy localhost:8080
+    }
+    handle /ws {
+        reverse_proxy localhost:8080
+    }
+
+    # Mobile web client — serve static files at root
+    handle {
+        root * /opt/atm-relay/www
+        file_server
+        try_files {path} /index.html
+    }
+
+    # Security headers
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy no-referrer
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+
+    log {
+        output file /var/log/caddy/atm-relay.log
+        format json
+    }
+}

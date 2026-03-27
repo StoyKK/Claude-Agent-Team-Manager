@@ -11,7 +11,6 @@ import { toast } from "@/components/common/Toast";
 import { logger } from "@/services/logger";
 
 interface AppSettings {
-  apiKey: string;
   teamColor: string;
   agentColor: string;
   accentColor: string;
@@ -19,7 +18,6 @@ interface AppSettings {
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
-  apiKey: "",
   teamColor: "#4a9eff",
   agentColor: "#f0883e",
   accentColor: "#4a9eff",
@@ -94,7 +92,6 @@ export function SettingsPanel() {
 
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [loading, setLoading] = useState(false);
-  const [apiKeyVisible, setApiKeyVisible] = useState(false);
   const [version, setVersion] = useState("0.6.3");
   const [includeSkills, setIncludeSkills] = useState(false);
 
@@ -295,39 +292,6 @@ export function SettingsPanel() {
               </div>
               <div style={{ fontSize: 11, color: "var(--text-secondary)", marginTop: 4 }}>
                 Agents and skills are loaded from this folder's .claude/ directory
-              </div>
-            </div>
-
-            {/* API Key */}
-            <div style={sectionStyle}>Claude API</div>
-            <div style={{ marginBottom: 16 }}>
-              <label style={labelStyle}>API Key</label>
-              <div style={{ display: "flex", gap: 6 }}>
-                <input
-                  type={apiKeyVisible ? "text" : "password"}
-                  style={{ ...inputStyle, flex: 1 }}
-                  value={settings.apiKey}
-                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
-                  placeholder="sk-ant-..."
-                />
-                <button
-                  onClick={() => setApiKeyVisible(!apiKeyVisible)}
-                  style={{
-                    background: "transparent",
-                    border: "1px solid var(--border-color)",
-                    color: "var(--text-secondary)",
-                    borderRadius: 4,
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    fontSize: 11,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {apiKeyVisible ? "Hide" : "Show"}
-                </button>
-              </div>
-              <div style={{ fontSize: 11, color: "var(--text-secondary)", marginTop: 4 }}>
-                Used for the Chat panel. Stored locally in .aui/settings.json
               </div>
             </div>
 

@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+src-tauri/target/
+
+# OS files
+.DS_Store
+
+# Local data
+.auto-claude/
+.aui/
+
+# Planning artifacts (local only)
+.planning/
+.claude/

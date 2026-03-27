@@ -6,28 +6,19 @@
   "permissions": [
     "core:default",
     "fs:default",
-    "fs:allow-read-dir",
-    "fs:allow-read-file",
-    "fs:allow-write-file",
-    "fs:allow-exists",
-    "fs:allow-mkdir",
-    "fs:allow-rename",
-    "fs:allow-remove",
-    "fs:allow-stat",
-    "fs:allow-watch",
-    "fs:allow-unwatch",
-    "fs:allow-read-text-file",
-    "fs:allow-write-text-file",
+    "fs:allow-home-read-recursive",
+    "fs:allow-home-write-recursive",
+    "fs:allow-home-meta-recursive",
     "fs:scope-home-recursive",
     {
       "identifier": "fs:scope",
       "allow": [
-        { "path": "$HOME/.aui/**" },
+        { "path": "$HOME" },
+        { "path": "$HOME/**" },
         { "path": "$HOME/.aui" },
-        { "path": "$HOME/.claude/**" },
+        { "path": "$HOME/.aui/**" },
         { "path": "$HOME/.claude" },
-        { "path": "$HOME/CLAUDE.md" },
-        { "path": "$HOME/CLAUDE.local.md" }
+        { "path": "$HOME/.claude/**" }
       ]
     },
     "dialog:default",
