@@ -28,7 +28,7 @@ Requirements for stability milestone. Each maps to roadmap phases.
 ### Testing
 
 - [x] **TEST-01**: Vitest configured within vite.config.ts (not separate file) with correct path aliases, fs stub, jsdom environment, and Tauri mock setup file
-- [ ] **TEST-02**: Tier 1 unit tests for pure utility functions: paths.ts (join, normalize, generateNodeId) and validation.ts (Zod schemas)
+- [x] **TEST-02**: Tier 1 unit tests for pure utility functions: paths.ts (join, normalize, generateNodeId) and validation.ts (Zod schemas)
 - [ ] **TEST-03**: Tier 2 integration tests for services: file-scanner, agent-parser, skill-parser using @tauri-apps/api/mocks mockIPC
 - [ ] **TEST-04**: Tier 3 component tests for SetupWizard flow (all 3 steps, error cases, Get Started completion) using @testing-library/react with Zustand store resets
 
@@ -76,7 +76,7 @@ Deferred to future milestones. Tracked but not in current roadmap.
 | ERR-02 | Phase 1 | Complete |
 | ERR-03 | Phase 3 | Pending |
 | TEST-01 | Phase 2 | Complete |
-| TEST-02 | Phase 2 | Pending |
+| TEST-02 | Phase 2 | Complete |
 | TEST-03 | Phase 2 | Pending |
 | TEST-04 | Phase 3 | Pending |
 
