@@ -28,11 +28,11 @@
   3. A user on a fresh macOS install where only `~/.claude/settings.json` exists (no project-level file) is not blocked at wizard step 2
   4. Running `pnpm test` in the project root executes the Vitest suite without import alias errors or `fs` stub failures
   5. A developer inspecting log output sees structured log entries (with level and context) rather than raw `console.log` strings
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 - [ ] 01-01-PLAN.md — Fix blocking bugs: toast portal, JSONC parsing, global settings fallback, wizard error message
-- [ ] 01-02-PLAN.md — Typed error classes and JSDoc error documentation on services
+- [x] 01-02-PLAN.md — Typed error classes and JSDoc error documentation on services
 - [ ] 01-03-PLAN.md — Logger facade service with Tauri/console routing
 - [ ] 01-04-PLAN.md — Replace all 55 console.log/warn/error calls with structured logger
 
@@ -63,7 +63,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure | 0/4 | Planned | - |
+| 1. Infrastructure | 1/4 | In Progress|  |
 | 2. Service Tests | 0/? | Not started | - |
 | 3. Component Tests and Error Boundaries | 0/? | Not started | - |
 

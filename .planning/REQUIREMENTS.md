@@ -21,8 +21,8 @@ Requirements for stability milestone. Each maps to roadmap phases.
 
 ### Error Handling
 
-- [ ] **ERR-01**: Typed error classes (ParseError, WriteError, ValidationError, ScanError) defined for core services with discriminant `kind` field
-- [ ] **ERR-02**: Service functions (agent-parser, skill-parser, file-writer, file-scanner) document expected error types in JSDoc
+- [x] **ERR-01**: Typed error classes (ParseError, WriteError, ValidationError, ScanError) defined for core services with discriminant `kind` field
+- [x] **ERR-02**: Service functions (agent-parser, skill-parser, file-writer, file-scanner) document expected error types in JSDoc
 - [ ] **ERR-03**: React Error Boundaries wrap major app sections with user-friendly fallback UI using react-error-boundary
 
 ### Testing
@@ -72,8 +72,8 @@ Deferred to future milestones. Tracked but not in current roadmap.
 | BUG-04 | Phase 1 | Pending |
 | LOG-01 | Phase 1 | Pending |
 | LOG-02 | Phase 1 | Pending |
-| ERR-01 | Phase 1 | Pending |
-| ERR-02 | Phase 1 | Pending |
+| ERR-01 | Phase 1 | Complete |
+| ERR-02 | Phase 1 | Complete |
 | ERR-03 | Phase 3 | Pending |
 | TEST-01 | Phase 2 | Pending |
 | TEST-02 | Phase 2 | Pending |
