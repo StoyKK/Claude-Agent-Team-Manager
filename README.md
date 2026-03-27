@@ -34,7 +34,7 @@ You know the config works because you've run it before. But there's no reusable 
 
 - **Drag-drop visual org chart** -- see your entire agent hierarchy at a glance
 - **One-click agent creation** -- templates autofill the YAML, you just name it
-- **Shared API key management** -- edit once at root, applies everywhere
+- **Zero-config AI** -- uses your existing Claude Code CLI, no API keys needed
 - **Save deployment configs** -- run the same team setup tomorrow with one click
 - **Schedule runs** -- daily SOC reports at 6am, weekly content pipelines on Monday morning, no manual cron
 - **Chain pipelines** -- Team A feeds into Team B feeds into Team C, automatically
@@ -104,8 +104,8 @@ v0.8 introduces remote capabilities!
 
 **Download the installer:**
 
-- **Windows**: **[Download ATM-Setup.exe](https://github.com/DatafyingTech/AUI/releases/latest)**
-- **macOS**: **[Download ATM.dmg](https://github.com/DatafyingTech/AUI/releases/latest)**
+- **Windows**: **[Download ATM-Setup.exe](https://github.com/StoyKK/Claude-Agent-Team-Manager/releases/latest)**
+- **macOS**: **[Download ATM.dmg](https://github.com/StoyKK/Claude-Agent-Team-Manager/releases/latest)**
 
 > **macOS users**: ATM is unsigned. Right-click the app and select "Open" the first time, or go to System Settings > Privacy & Security > "Open Anyway."
 
@@ -116,19 +116,19 @@ v0.8 introduces remote capabilities!
 3. Drag agents into teams, assign skills, set variables
 4. Write a short objective, click Deploy, and watch your team go
 
-That's it. No configuration files, no setup wizards.
+That's it. No API keys to configure — ATM uses your existing Claude Code installation.
 
 <details>
 <summary><strong>Build from source</strong> (for developers)</summary>
 
 **Fastest way**: Paste this repo URL into Claude Code and let it handle the setup:
 ```
-https://github.com/DatafyingTech/AUI
+https://github.com/StoyKK/Claude-Agent-Team-Manager
 ```
 
 **Manual setup**:
 ```bash
-git clone https://github.com/DatafyingTech/AUI.git
+git clone https://github.com/StoyKK/Claude-Agent-Team-Manager.git
 cd AUI
 pnpm install
 pnpm tauri dev
@@ -177,7 +177,7 @@ pnpm tauri build
 ## How It Works
 
 1. **Design** -- Build your org chart by dragging agents into position and assigning skills
-2. **Configure** -- Click any node to set API keys, passwords, descriptions, and skills in the inspector
+2. **Configure** -- Click any node to set descriptions, skills, and variables in the inspector
 3. **Deploy** -- Write your objective, click Deploy, and ATM compiles the full primer then launches Claude in your terminal
 4. **Run** -- Claude executes with complete context from message one. No manual setup, no missing config
 
@@ -226,6 +226,14 @@ pnpm tauri build
 ---
 
 ## Changelog
+
+### v0.9.0 (2026-03-27)
+- **Removed:** API key requirement — all AI features now use your locally installed Claude Code CLI (`claude --print`)
+- **Removed:** API key input from Setup Wizard and Settings panel (no configuration needed)
+- **Fixed:** Tauri FS "forbidden path" errors when opening project directories — switched to composite permissions (`fs:allow-home-read/write-recursive`) that properly scope all FS operations
+- **Fixed:** Setup Wizard now stores completion state in global `~/.aui/settings.json` instead of per-project, preventing the wizard from re-appearing when switching projects
+- **Simplified:** Setup Wizard reduced from 3 steps to 2 (Welcome + Agent Teams → Get Started)
+- **Improved:** Zero-config experience — just install Claude Code and launch ATM
 
 ### v0.7.0 (2026-02-27)
 - **Added:** macOS support -- DMG installer now available alongside Windows EXE/MSI
