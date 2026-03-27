@@ -10,7 +10,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Infrastructure** - Fix blocking bugs and lay shared foundations (logger, error types, JSONC, Vitest)
+- [x] **Phase 1: Infrastructure** - Fix blocking bugs and lay shared foundations (logger, error types, JSONC, Vitest) (completed 2026-03-27)
 - [ ] **Phase 2: Service Tests** - Test utility functions and service-layer parsers with the infrastructure from Phase 1
 - [ ] **Phase 3: Component Tests and Error Boundaries** - Test the SetupWizard end-to-end and add React Error Boundaries
 
@@ -28,13 +28,13 @@
   3. A user on a fresh macOS install where only `~/.claude/settings.json` exists (no project-level file) is not blocked at wizard step 2
   4. Running `pnpm test` in the project root executes the Vitest suite without import alias errors or `fs` stub failures
   5. A developer inspecting log output sees structured log entries (with level and context) rather than raw `console.log` strings
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md — Fix blocking bugs: toast portal, JSONC parsing, global settings fallback, wizard error message
 - [x] 01-02-PLAN.md — Typed error classes and JSDoc error documentation on services
 - [x] 01-03-PLAN.md — Logger facade service with Tauri/console routing
-- [ ] 01-04-PLAN.md — Replace all 55 console.log/warn/error calls with structured logger
+- [x] 01-04-PLAN.md — Replace all 55 console.log/warn/error calls with structured logger
 
 ### Phase 2: Service Tests
 **Goal**: The utility functions and file-parsing services have automated test coverage that catches regressions before users see them
@@ -63,7 +63,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure | 3/4 | In Progress|  |
+| 1. Infrastructure | 4/4 | Complete   | 2026-03-27 |
 | 2. Service Tests | 0/? | Not started | - |
 | 3. Component Tests and Error Boundaries | 0/? | Not started | - |
 
