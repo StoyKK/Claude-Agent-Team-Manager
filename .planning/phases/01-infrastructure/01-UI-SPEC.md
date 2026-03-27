@@ -129,7 +129,7 @@ Source: CONTEXT.md D-06, D-07, and REQUIREMENTS.md BUG-04.
 | Toast: API key saved | "API key saved" |
 | Toast: API key missing | "Please enter an API key" |
 | Toast: teams enabled | "Agent teams enabled!" |
-| Toast: teams enable failed | "Failed to enable teams" |
+| Toast: teams enable failed | "Could not enable agent teams — check that ~/.claude/settings.json is writable" |
 | Toast: wizard save failed (BUG-04) | "Could not complete setup — check that your home directory is writable" |
 | Toast: browser open failed | "Could not open browser" |
 | Toast: generic save failed | "Could not save settings. Please try again." |
