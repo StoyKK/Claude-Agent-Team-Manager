@@ -15,8 +15,19 @@ export async function parseSkillFile(
   filePath: string,
   content?: string
 ): Promise<AuiNode> {
-  const raw = content ?? (await readTextFile(filePath));
-  const parsed = matter(raw);
+  let raw: string;
+  try {
+    raw = content ?? (await readTextFile(filePath));
+  } catch (err) {
+    throw new ParseError("Failed to read skill file: " + filePath, err);
+  }
+
+  let parsed: matter.GrayMatterFile<string>;
+  try {
+    parsed = matter(raw);
+  } catch (err) {
+    throw new ParseError("Failed to parse frontmatter: " + filePath, err);
+  }
   const hasFrontmatter = Object.keys(parsed.data).length > 0;
 
   const name: string =
