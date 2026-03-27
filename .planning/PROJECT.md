@@ -21,10 +21,14 @@ The app must complete its setup wizard and reach the main editor without errors 
 
 ### Active
 
-- [ ] Add Vitest testing framework and configuration
 - [ ] Write tests for setup wizard flow (all 3 steps, error cases)
-- [ ] Write tests for file-scanner, agent-parser, skill-parser services
-- [ ] Write tests for path utilities and validation schemas
+- [ ] Add React Error Boundaries with fallback UI
+
+### Validated in Phase 2
+
+- [x] Add Vitest testing framework and configuration — Validated in Phase 2: Service Tests
+- [x] Write tests for file-scanner, agent-parser, skill-parser services — Validated in Phase 2: Service Tests (46 tests)
+- [x] Write tests for path utilities and validation schemas — Validated in Phase 2: Service Tests (29 tests)
 
 ### Out of Scope
 
