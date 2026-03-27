@@ -12,16 +12,15 @@ The app must complete its setup wizard and reach the main editor without errors 
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Fix toast z-index rendering behind wizard overlay — Validated in Phase 1: Infrastructure (createPortal)
+- [x] Fix setup wizard "Get Started" button not responding due to hidden error — Validated in Phase 1: Infrastructure
+- [x] Fix Claude settings reading — check global ~/.claude/ path, support JSONC parsing — Validated in Phase 1: Infrastructure
+- [x] Fix setup wizard reporting "Agent teams not enabled" despite correct settings — Validated in Phase 1: Infrastructure
+- [x] Replace scattered console.log/warn/error (55 instances) with structured logging service — Validated in Phase 1: Infrastructure
+- [x] Define error types for core services (agent-parser, file-writer, remote-sync, file-scanner) — Validated in Phase 1: Infrastructure
 
 ### Active
 
-- [ ] Fix toast z-index rendering behind wizard overlay (z:10000 vs z:20000 with blur)
-- [ ] Fix setup wizard "Get Started" button not responding due to hidden error
-- [ ] Fix Claude settings reading — check global ~/.claude/ path, support JSONC parsing
-- [ ] Fix setup wizard reporting "Agent teams not enabled" despite correct settings
-- [ ] Replace scattered console.log/warn/error (55 instances) with structured logging service
-- [ ] Define error types for core services (agent-parser, file-writer, remote-sync, file-scanner)
 - [ ] Add Vitest testing framework and configuration
 - [ ] Write tests for setup wizard flow (all 3 steps, error cases)
 - [ ] Write tests for file-scanner, agent-parser, skill-parser services
