@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { homeDir } from "@tauri-apps/api/path";
 import { readTextFile, exists } from "@tauri-apps/plugin-fs";
 import { ReactFlowProvider } from "@xyflow/react";
+import { ErrorBoundary } from "react-error-boundary";
 import { TreeCanvas } from "./components/tree/TreeCanvas";
 import { InspectorPanel } from "./components/inspector/InspectorPanel";
 import { ContextHub } from "./components/context-hub/ContextHub";
@@ -13,6 +14,7 @@ import { DeleteConfirmDialog } from "./components/dialogs/DeleteConfirmDialog";
 import { SettingsPanel } from "./components/settings/SettingsPanel";
 import { SchedulePanel } from "./components/schedule/SchedulePanel";
 import { ToastContainer, toast } from "./components/common/Toast";
+import { ErrorFallback } from "./components/common/ErrorFallback";
 import { SetupWizard } from "./components/setup/SetupWizard";
 import { useTreeStore } from "./store/tree-store";
 import { useUiStore } from "./store/ui-store";
@@ -82,6 +84,19 @@ function App() {
       toast(err instanceof Error ? err.message : "Failed to delete", "error");
     }
   };
+
+  // Catch unhandled promise rejections — log them and show a toast (per D-05)
+  useEffect(() => {
+    function handleRejection(event: PromiseRejectionEvent) {
+      const message = event.reason instanceof Error
+        ? event.reason.message
+        : String(event.reason);
+      logger.error("unhandled-rejection", message);
+      toast("An unexpected error occurred", "error");
+    }
+    window.addEventListener("unhandledrejection", handleRejection);
+    return () => window.removeEventListener("unhandledrejection", handleRejection);
+  }, []);
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -193,38 +208,44 @@ function App() {
   }, [projectPath, syncFromDisk]);
 
   return (
-    <div className="app">
-      <Toolbar />
-      <div className="main-content">
-        <div className="tree-panel">
-          <ValidationBanner />
-          <ReactFlowProvider>
-            <TreeCanvas />
-          </ReactFlowProvider>
-        </div>
-        {inspectorOpen && (
-          <div className="inspector-panel">
-            <InspectorPanel />
+    <ErrorBoundary fallbackRender={ErrorFallback}>
+      <div className="app">
+        <Toolbar />
+        <div className="main-content">
+          <div className="tree-panel">
+            <ErrorBoundary fallbackRender={ErrorFallback}>
+              <ValidationBanner />
+              <ReactFlowProvider>
+                <TreeCanvas />
+              </ReactFlowProvider>
+            </ErrorBoundary>
           </div>
-        )}
+          {inspectorOpen && (
+            <div className="inspector-panel">
+              <InspectorPanel />
+            </div>
+          )}
+        </div>
+        <ContextHub />
+        <CreateNodeDialog
+          open={createDialogOpen}
+          onClose={closeCreateDialog}
+          onCreate={handleCreate}
+        />
+        <DeleteConfirmDialog
+          open={!!deleteDialogNodeId}
+          nodeName={deleteNodeName}
+          onClose={closeDeleteDialog}
+          onConfirm={handleDelete}
+        />
+        <SettingsPanel />
+        <SchedulePanelWrapper />
+        <ErrorBoundary fallbackRender={ErrorFallback}>
+          <SetupWizard />
+        </ErrorBoundary>
+        <ToastContainer />
       </div>
-      <ContextHub />
-      <CreateNodeDialog
-        open={createDialogOpen}
-        onClose={closeCreateDialog}
-        onCreate={handleCreate}
-      />
-      <DeleteConfirmDialog
-        open={!!deleteDialogNodeId}
-        nodeName={deleteNodeName}
-        onClose={closeDeleteDialog}
-        onConfirm={handleDelete}
-      />
-      <SettingsPanel />
-      <SchedulePanelWrapper />
-      <SetupWizard />
-      <ToastContainer />
-    </div>
+    </ErrorBoundary>
   );
 }
 
