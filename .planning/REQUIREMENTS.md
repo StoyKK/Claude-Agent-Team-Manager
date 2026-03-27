@@ -23,14 +23,14 @@ Requirements for stability milestone. Each maps to roadmap phases.
 
 - [x] **ERR-01**: Typed error classes (ParseError, WriteError, ValidationError, ScanError) defined for core services with discriminant `kind` field
 - [x] **ERR-02**: Service functions (agent-parser, skill-parser, file-writer, file-scanner) document expected error types in JSDoc
-- [ ] **ERR-03**: React Error Boundaries wrap major app sections with user-friendly fallback UI using react-error-boundary
+- [x] **ERR-03**: React Error Boundaries wrap major app sections with user-friendly fallback UI using react-error-boundary
 
 ### Testing
 
 - [x] **TEST-01**: Vitest configured within vite.config.ts (not separate file) with correct path aliases, fs stub, jsdom environment, and Tauri mock setup file
 - [x] **TEST-02**: Tier 1 unit tests for pure utility functions: paths.ts (join, normalize, generateNodeId) and validation.ts (Zod schemas)
-- [ ] **TEST-03**: Tier 2 integration tests for services: file-scanner, agent-parser, skill-parser using @tauri-apps/api/mocks mockIPC
-- [ ] **TEST-04**: Tier 3 component tests for SetupWizard flow (all 3 steps, error cases, Get Started completion) using @testing-library/react with Zustand store resets
+- [x] **TEST-03**: Tier 2 integration tests for services: file-scanner, agent-parser, skill-parser using @tauri-apps/api/mocks mockIPC
+- [x] **TEST-04**: Tier 3 component tests for SetupWizard flow (all 3 steps, error cases, Get Started completion) using @testing-library/react with Zustand store resets
 
 ## v2 Requirements
 
@@ -74,11 +74,11 @@ Deferred to future milestones. Tracked but not in current roadmap.
 | LOG-02 | Phase 1 | Complete |
 | ERR-01 | Phase 1 | Complete |
 | ERR-02 | Phase 1 | Complete |
-| ERR-03 | Phase 3 | Pending |
+| ERR-03 | Phase 3 | Complete |
 | TEST-01 | Phase 2 | Complete |
 | TEST-02 | Phase 2 | Complete |
-| TEST-03 | Phase 2 | Pending |
-| TEST-04 | Phase 3 | Pending |
+| TEST-03 | Phase 2 | Complete |
+| TEST-04 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 13 total
@@ -87,4 +87,4 @@ Deferred to future milestones. Tracked but not in current roadmap.
 
 ---
 *Requirements defined: 2026-03-27*
-*Last updated: 2026-03-27 after roadmap creation*
+*Last updated: 2026-03-27 after milestone audit*
