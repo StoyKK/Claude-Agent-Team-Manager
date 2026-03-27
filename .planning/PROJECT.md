@@ -21,8 +21,12 @@ The app must complete its setup wizard and reach the main editor without errors 
 
 ### Active
 
-- [ ] Write tests for setup wizard flow (all 3 steps, error cases)
-- [ ] Add React Error Boundaries with fallback UI
+(none — all milestone requirements validated)
+
+### Validated in Phase 3
+
+- [x] Write tests for setup wizard flow (all 3 steps, error cases) — Validated in Phase 3: Component Tests (6 SetupWizard tests + 3 ErrorFallback tests)
+- [x] Add React Error Boundaries with fallback UI — Validated in Phase 3: Component Tests (3 boundaries: root, TreeCanvas, SetupWizard + unhandledrejection handler)
 
 ### Validated in Phase 2
 
@@ -81,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-27 after initialization*
+*Last updated: 2026-03-27 after Phase 3 completion — all milestone phases complete*
