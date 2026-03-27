@@ -16,7 +16,7 @@ Requirements for stability milestone. Each maps to roadmap phases.
 
 ### Logging
 
-- [ ] **LOG-01**: Centralized logger facade service that integrates with @tauri-apps/plugin-log when running in Tauri, falls back to console when running in browser-only mode (pnpm dev)
+- [x] **LOG-01**: Centralized logger facade service that integrates with @tauri-apps/plugin-log when running in Tauri, falls back to console when running in browser-only mode (pnpm dev)
 - [ ] **LOG-02**: All 55 existing console.log/warn/error calls replaced with structured logger calls using appropriate log levels
 
 ### Error Handling
@@ -70,7 +70,7 @@ Deferred to future milestones. Tracked but not in current roadmap.
 | BUG-02 | Phase 1 | Pending |
 | BUG-03 | Phase 1 | Pending |
 | BUG-04 | Phase 1 | Pending |
-| LOG-01 | Phase 1 | Pending |
+| LOG-01 | Phase 1 | Complete |
 | LOG-02 | Phase 1 | Pending |
 | ERR-01 | Phase 1 | Pending |
 | ERR-02 | Phase 1 | Pending |
